@@ -13,7 +13,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: node-exporter
+      name: node-exporter
   template:
     metadata:
       labels:
@@ -65,17 +65,3 @@ spec:
         - name: rootfs
           hostPath:
             path: /
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: node-exporter
-spec:
-  type: LoadBalancer
-  selector:
-    app: node-exporter
-  ports:
-  - name: promui
-    protocol: TCP
-    port: 9090
-    targetPort: 9090
