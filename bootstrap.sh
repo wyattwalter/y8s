@@ -11,8 +11,14 @@ if [ -z $KUBECTL ]; then
   exit 1
 fi
 
+ACTION="apply"
+
+if [ "${1}" = "delete" ]; then
+  ACTION="delete"
+fi
+
 DIR=`dirname $0`
 
 for FILE in ${DIR}/platform-services/*.yaml; do
-  $KUBECTL apply -f $FILE
+  $KUBECTL $ACTION -f $FILE
 done
