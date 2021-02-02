@@ -22,3 +22,13 @@ ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server
 
 echo "ArgoCD should be up and running shortly at https://localhost:8443"
 echo "Login with username 'admin' and password '${ARGOCD_PASS}'"
+
+## DO NOTHING PART
+
+echo "poll until deployment.apps/argocd-server is up"
+
+echo "install the argocd tool"
+
+echo "login to argocd locally"
+
+echo "create a demo app"
