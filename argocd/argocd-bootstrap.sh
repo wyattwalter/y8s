@@ -1,4 +1,4 @@
-#/bin/env bash
+#!/usr/bin/env bash
 
 # Doing this as a standalone bootstrap because the quick start wants to pull their manifest from latest, and we only need minor patches
 
