@@ -1,4 +1,4 @@
-#/bin/env bash
+#!/usr/bin/env bash
 
 for CMD in kubectl microk8s.kubectl
 do
