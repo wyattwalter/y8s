@@ -22,7 +22,9 @@ spec:
         component: backend
     spec:
       containers:
-        - name: backend
+        - name: backstage
+          # It appears that if the node server is serving both the front-end and the back-end componets, so there's
+          # no immediate need to bring in both frontend and backend images for the time being.
           image: dsva/backstage-demo-backend
           #args: [--config, k8s-config.yaml]
 
@@ -52,6 +54,11 @@ spec:
                 secretKeyRef:
                   name: backstage-dev-github-oauth
                   key: client_secret
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-dev-github-oauth
+                  key: github_token
 
           ports:
             - name: http
@@ -59,8 +66,12 @@ spec:
 
           volumeMounts:
             - name: config-volume
-              mountPath: /usr/src/app/k8s-config.yaml
+              mountPath: /usr/src/app/app-config.production.yaml
               subPath: k8s-config.yaml
+            - name: tmp-volume
+              mountPath: /tmp/backstage
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
 
           resources:
             limits:
@@ -83,6 +94,12 @@ spec:
             items:
               - key: app-config
                 path: k8s-config.yaml
+        - name: tmp-volume
+          hostPath:
+            path: /tmp/backstage
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -93,10 +110,10 @@ data:
   # Note that the config here is only applied to the backend. The frontend config is applied at build time.
   # To override frontend config in this deployment, use `APP_CONFIG_` env vars.
   app-config: |
-    app:
-      baseUrl: http://localhost:3000
     backend:
-      baseUrl: http://localhost:7000
+      database:
+        client: sqlite3
+        connection: ':memory:'
 ---
 apiVersion: v1
 kind: Service
@@ -109,7 +126,11 @@ spec:
     app: backstage
     component: backend
   ports:
-    - name: backstage
+    - name: backend
       port: 7000
+      protocol: TCP
+      targetPort: 7000
+    - name: frontend
+      port: 3000
       protocol: TCP
       targetPort: 7000
