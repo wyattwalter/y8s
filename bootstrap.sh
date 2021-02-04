@@ -8,15 +8,6 @@ if [ "$1" = "delete" ]; then
   exit 0
 fi
 
-DIR=`dirname $0`
-
-. "${DIR}/.env"
-
-if [ -z "$GITHUB_TOKEN" ]; then
-  echo "Environment vars GITHUB_TOKEN needs to be exported in .env"
-  exit 1
-fi
-
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
@@ -43,7 +34,7 @@ else
 fi
 
 echo "create a demo app"
-argocd repo add --username wyattwalter --password ${GITHUB_TOKEN} https://github.com/wyattwalter/y8s.git
+argocd repo add https://github.com/wyattwalter/y8s.git
 argocd app create apps --repo https://github.com/wyattwalter/y8s.git --path apps --dest-server https://kubernetes.default.svc
 
 argocd app sync apps >> bootstrap.log
