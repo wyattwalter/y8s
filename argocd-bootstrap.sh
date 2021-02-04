@@ -45,3 +45,6 @@ fi
 echo "create a demo app"
 argocd repo add --username wyattwalter --password ${GITHUB_TOKEN} https://github.com/wyattwalter/y8s.git
 argocd app create apps --repo https://github.com/wyattwalter/y8s.git --path apps --dest-server https://kubernetes.default.svc
+
+argocd app sync apps >> bootstrap.log
+argocd app sync -l app.kubernetes.io/instance=apps >> bootstrap.log
