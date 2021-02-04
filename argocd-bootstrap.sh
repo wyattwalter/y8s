@@ -8,11 +8,20 @@ if [ "$1" = "delete" ]; then
   exit 0
 fi
 
+DIR=`dirname $0`
+
+. "${DIR}/.env"
+
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "Environment vars GITHUB_TOKEN needs to be exported in .env"
+  exit 1
+fi
+
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # apply any overrides in argo-patch.yaml
-kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argo-patch.yaml)"
+kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argocd/argo-patch.yaml)"
 
 export ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
 export ARGOCD_LOGIN="argocd login localhost:8443 --insecure --username admin --password ${ARGOCD_PASS}"
@@ -34,5 +43,5 @@ else
 fi
 
 echo "create a demo app"
-argocd repo add --username wyattwalter --password ${GITHUB_TOKEN} https://github.com/wyattwalter/demo-apps.git
-argocd app create case-api --repo https://github.com/wyattwalter/demo-apps.git --path case-api --dest-namespace default --dest-server https://kubernetes.default.svc
+argocd repo add --username wyattwalter --password ${GITHUB_TOKEN} https://github.com/wyattwalter/y8s.git
+argocd app create apps --repo https://github.com/wyattwalter/y8s.git --path apps --dest-server https://kubernetes.default.svc
