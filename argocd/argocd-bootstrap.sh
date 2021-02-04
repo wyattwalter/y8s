@@ -14,8 +14,8 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 # apply any overrides in argo-patch.yaml
 kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argo-patch.yaml)"
 
-ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
-ARGOCD_LOGIN="argocd login localhost:8443 --insecure --username admin --password ${ARGOCD_PASS}"
+export ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
+export ARGOCD_LOGIN="argocd login localhost:8443 --insecure --username admin --password ${ARGOCD_PASS}"
 echo
 echo "ArgoCD should be up and running shortly at https://localhost:8443"
 echo "Login with username 'admin' and password '${ARGOCD_PASS}'"
