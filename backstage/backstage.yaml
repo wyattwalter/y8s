@@ -23,13 +23,8 @@ spec:
     spec:
       containers:
         - name: backend
-          # This image is built with `yarn docker-build` in the repo root.
-          # Replace this with your own image to deploy your own Backstage app.
-          image: example-backend:latest
-          imagePullPolicy: Never
-
-          command: [node, packages/backend]
-          args: [--config, app-config.yaml, --config, k8s-config.yaml]
+          image: dsva/backstage-demo-backend
+          #args: [--config, k8s-config.yaml]
 
           env:
             # We set this to development to make the backend start with incomplete configuration. In a production
@@ -99,7 +94,7 @@ data:
   # To override frontend config in this deployment, use `APP_CONFIG_` env vars.
   app-config: |
     app:
-      baseUrl: http://localhost:7000
+      baseUrl: http://localhost:3000
     backend:
       baseUrl: http://localhost:7000
 ---
