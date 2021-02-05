@@ -119,6 +119,11 @@ data:
           changeOrigin: true
           # only if your argocd api has self-signed cert
           secure: false
+    catalog:
+      locations:
+        - type: url
+          target: https://github.com/wyattwalter/case-api/blob/main/catalog.yaml
+
 ---
 apiVersion: v1
 kind: Service
