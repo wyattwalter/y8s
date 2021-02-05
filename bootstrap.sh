@@ -3,7 +3,9 @@
 # Doing this as a standalone bootstrap because the quick start wants to pull their manifest from latest, and we only need minor patches
 
 if [ "$1" = "delete" ]; then
+  echo "Deleting apps in ArgoCD.."
   for app in $(argocd app list -o name); do argocd app delete $app; done
+  sleep 30
   kubectl delete namespace argocd
   exit 0
 fi
@@ -15,27 +17,33 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argocd/argo-patch.yaml)"
 
 export ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
-export ARGOCD_LOGIN="argocd login localhost:8443 --insecure --username admin --password ${ARGOCD_PASS}"
 echo
 echo "ArgoCD should be up and running shortly at https://localhost:8443"
-echo "Login with username 'admin' and password '${ARGOCD_PASS}'"
+echo "Initial login info: username: 'admin' and password: '${ARGOCD_PASS}'"
+echo "We'll attempt change that in the moment, but if it fails you can use this ^^"
 echo
 
 # waits until rollout of argocd-server is complete
 kubectl rollout status -n argocd deployment.apps/argocd-server
 
 if [ -x "$(command -v argocd)" ]; then
-  $ARGOCD_LOGIN
+  argocd login localhost:8443 --insecure --username admin --password ${ARGOCD_PASS}
+  echo "argocd logged in, changing password"
+  argocd account update-password --current-password ${ARGOCD_PASS} --new-password sekret
+
+  echo "create some stuff and things"
+  argocd repo add https://github.com/wyattwalter/y8s.git
+  argocd app create apps --repo https://github.com/wyattwalter/y8s.git --path apps --dest-server https://kubernetes.default.svc
+
+  argocd app sync apps >> bootstrap.log
+  argocd app sync -l app.kubernetes.io/instance=apps >> bootstrap.log
+
+  if [ -n $BROWSER ]; then
+    echo "Launching a browser for ArgoCD. Bypass the self-signed certificate warning and you should be able to login with username 'admin' and password 'sekret'."
+    $BROWSER 'https://localhost:8443/'
+  fi
 else
   echo
-  echo "Argocd cli not detected in path. Install it using instructions here and then login with:"
-  echo "$ARGOCD_LOGIN"
+  echo "ArgoCD cli not detected in path. Install it and then run bootstrap again to finish the setup. Instructions here: https://argoproj.github.io/argo-cd/cli_installation/"
   echo
 fi
-
-echo "create a demo app"
-argocd repo add https://github.com/wyattwalter/y8s.git
-argocd app create apps --repo https://github.com/wyattwalter/y8s.git --path apps --dest-server https://kubernetes.default.svc
-
-argocd app sync apps >> bootstrap.log
-argocd app sync -l app.kubernetes.io/instance=apps >> bootstrap.log
