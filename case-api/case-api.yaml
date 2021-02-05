@@ -10,6 +10,8 @@ spec:
     name: http
     protocol: TCP
     targetPort: 3000
+  selector:
+    app: case-api
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,7 +41,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: demo
+  name: case-api
   annotations:
     konghq.com/plugins: request-id
     kubernetes.io/ingress.class: kong
