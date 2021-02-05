@@ -45,7 +45,6 @@ metadata:
   annotations:
     konghq.com/plugins: request-id
     kubernetes.io/ingress.class: kong
-    konghq.com/plugins: rl-by-ip
 spec:
   rules:
   - http:
