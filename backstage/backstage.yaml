@@ -25,7 +25,7 @@ spec:
         - name: backstage
           # It appears that if the node server is serving both the front-end and the back-end componets, so there's
           # no immediate need to bring in both frontend and backend images for the time being.
-          image: wyattwalter/backstage-demo:a3a7aadef8ce6e204854187fc9454ed618468a30
+          image: dsva/backstage-demo-backend:47ae07a9911af99bd1bc7155d6a702f7c7d43f19
           #args: [--config, k8s-config.yaml]
 
           env:
