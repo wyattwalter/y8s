@@ -32,7 +32,7 @@ spec:
         app: case-api
     spec:
       containers:
-      - image: wyattwalter/case-api:eaf7eb8ee0b526c12ae7bc813e4f982d202c4c66
+      - image: wyattwalter/case-api:latest
         name: case-api
         command: ["yarn", "start"]
         ports:
