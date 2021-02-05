@@ -43,7 +43,6 @@ kind: Ingress
 metadata:
   name: case-api
   annotations:
-    konghq.com/plugins: echo-auth
     kubernetes.io/ingress.class: kong
 spec:
   rules:
