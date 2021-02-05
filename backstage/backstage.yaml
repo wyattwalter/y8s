@@ -25,7 +25,7 @@ spec:
         - name: backstage
           # It appears that if the node server is serving both the front-end and the back-end componets, so there's
           # no immediate need to bring in both frontend and backend images for the time being.
-          image: dsva/backstage-demo-backend
+          image: wyattwalter/backstage-demo:a3a7aadef8ce6e204854187fc9454ed618468a30
           #args: [--config, k8s-config.yaml]
 
           env:
@@ -114,6 +114,12 @@ data:
       database:
         client: sqlite3
         connection: ':memory:'
+      proxy:
+        '/argocd/api':
+          target: https://argocd-server.argocd.svc.cluster.local:8443/api/v1/
+          changeOrigin: true
+          # only if your argocd api has self-signed cert
+          secure: false
 ---
 apiVersion: v1
 kind: Service
