@@ -5,7 +5,8 @@
 if [ "$1" = "delete" ]; then
   echo "Deleting apps in ArgoCD.."
   for app in $(argocd app list -o name); do argocd app delete $app; done
-  sleep 30
+  echo "Sleeping to give time for ArgoCD to delete apps before deleting ArgoCD itself. There's no error checking or handling here, so check `kubectl get namespaces` for anything suspicious after this is done."
+  sleep 60
   kubectl delete namespace argocd
   exit 0
 fi

@@ -30,3 +30,9 @@ If successful, it'll start up an ArgoCD instance which will bootstrap the rest o
 ```
 ./backstage/populate-secrets.sh
 ```
+
+Tear it down with:
+
+```
+./bootstrap.sh delete
+```
