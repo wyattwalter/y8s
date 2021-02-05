@@ -11,3 +11,11 @@ data:
   #   apiKey - allows generating API keys
   #   login - allows to login using UI
   users.anonymous.enabled: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  policy.default: role:readonly

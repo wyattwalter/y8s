@@ -14,7 +14,9 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # apply any overrides in argo-patch.yaml
-kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argocd/argo-patch.yaml)"
+kubectl patch svc argocd-server -n argocd --type merge --patch "$(cat argocd/argocd-patch.yaml)"
+# apply local configs to argocd
+kubectl apply -f argocd/argocd-config.yaml
 
 export ARGOCD_PASS=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
 echo
