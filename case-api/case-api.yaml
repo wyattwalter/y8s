@@ -44,6 +44,7 @@ metadata:
   name: case-api
   annotations:
     kubernetes.io/ingress.class: kong
+    konghq.com/plugins: rl-by-ip
 spec:
   rules:
   - http:
