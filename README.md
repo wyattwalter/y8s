@@ -4,6 +4,12 @@ This is just a demo repo to bootstrap a local platform-ish thing. It uses ArgoCD
 
 ## Tools you need to install
 
+- minikube
+- minikube start --driver=hyperkit --memory=6g
+- minikube addons enable ingress
+- minikube addons enable ingress-dns
+
+
 - kubectl and a working k8s cluster (I am using Docker Desktop with Kubernetes installed)
 - ArgoCD command line tool
 
