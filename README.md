@@ -1,6 +1,6 @@
 # y8s
 
-This is just a demo repo to bootstrap a local platform-ish thing. It uses ArgoCD as the base and bootstraps using the [app-of-apps pattern](https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/). There's little to no error handling and is not meant to be re-usable at the moment.
+k8s for y@. A demo platform.
 
 ## Tools you need to install
 
@@ -8,10 +8,9 @@ This is just a demo repo to bootstrap a local platform-ish thing. It uses ArgoCD
 - minikube start --driver=hyperkit --memory=6g
 - minikube addons enable ingress
 - minikube addons enable ingress-dns
-
-
-- kubectl and a working k8s cluster (I am using Docker Desktop with Kubernetes installed)
-- ArgoCD command line tool
+- asdf
+- `asdf install`
+- `helm plugin install https://github.com/databus23/helm-diff`
 
 ## Setup
 
