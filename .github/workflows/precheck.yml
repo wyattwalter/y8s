@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     name: run pre-check on instance
     steps:
+    - name: asdf_install
+      uses: asdf-vm/actions/install@v1
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
