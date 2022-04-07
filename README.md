@@ -4,13 +4,16 @@ k8s for y@. A demo platform.
 
 ## Tools you need to install
 
-- minikube
-- minikube start --driver=hyperkit --memory=6g
-- minikube addons enable ingress
-- minikube addons enable ingress-dns
-- asdf
-- `asdf install`
-- `helm plugin install https://github.com/databus23/helm-diff`
+- [minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [asdf](https://asdf-vm.com/guide/getting-started.html)
+
+```shell
+minikube start --driver=hyperkit --memory=6g
+minikube addons enable ingress
+minikube addons enable ingress-dns
+asdf install
+helm plugin install https://github.com/databus23/helm-diff
+```
 
 ## Setup
 
