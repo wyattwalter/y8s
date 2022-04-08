@@ -2,7 +2,6 @@
 
 k8s for y@. A demo platform.
 
-
 ## Tools you need to install
 
 - [minikube](https://minikube.sigs.k8s.io/docs/start/)

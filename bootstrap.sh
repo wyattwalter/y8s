@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Doing this as a standalone bootstrap because the quick start wants to pull their manifest from latest, and we only need minor patches
-
 if [ "$1" = "delete" ]; then
   echo "Deleting apps in ArgoCD.."
   for app in $(argocd app list -o name); do argocd app delete $app; done

@@ -16,9 +16,10 @@ repositories:
 environments:
   default:
     values:
-    - domain: local.ycloud.rocks
-    - default_issuer: selfsigned
-    - ingress_enabled: false
+    - y8s:
+        domain: local.ycloud.rocks
+        default_issuer: selfsigned
+        ingress_enabled: false
     - env-override.yaml
 
 releases:
@@ -73,7 +74,7 @@ releases:
   namespace: ingress-nginx
   chart: ingress-nginx/ingress-nginx
   version: '4.0.18'
-  installed: {{ .Values.ingress_enabled }}
+  installed: {{ .Values.y8s.ingress_enabled }}
   values:
   - controller:
       metrics:
@@ -88,21 +89,21 @@ releases:
   - server:
       certificate:
         enabled: true
-        domain: "argocd.{{ .Values.domain }}"
+        domain: "argocd.{{ .Values.y8s.domain }}"
         issuer:
           kind: ClusterIssuer
-          name: {{ .Values.default_issuer }}
+          name: {{ .Values.y8s.default_issuer }}
       extraArgs:
       - --insecure
       ingress:
         annotations:
-          cert-manager.io/cluster-issuer: {{ .Values.default_issuer }}
+          cert-manager.io/cluster-issuer: {{ .Values.y8s.default_issuer }}
         enabled: true
         https: true
         ingressClassName: nginx
         hosts:
-        - argocd.{{ .Values.domain }}
+        - argocd.{{ .Values.y8s.domain }}
         tls:
         - hosts:
-          - argocd.{{ .Values.domain }}
+          - argocd.{{ .Values.y8s.domain }}
           secretName: argocd-cert
