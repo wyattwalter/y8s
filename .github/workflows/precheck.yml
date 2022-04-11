@@ -11,9 +11,5 @@ jobs:
       uses: asdf-vm/actions/install@v1
     - name: Start minikube
       uses: medyagh/setup-minikube@master
-    - name: enable minikube addons
-      run: |
-        minikube addons enable ingress
-        minikube addons enable ingress-dns
-    - name: run pre-check
-      run: make pre-check
+    - name: run setup
+      run: make

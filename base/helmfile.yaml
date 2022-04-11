@@ -40,6 +40,7 @@ releases:
   labels:
     component: "cert-manager"
     namespace: "cert-manager"
+  disableValidationOnInstall: true # see commit https://github.com/roboll/helmfile/commit/1ef9b29f6dce765e3a083e90467581ad2e6fccc6
   values:
   - resources:
     - apiVersion: cert-manager.io/v1
@@ -85,6 +86,7 @@ releases:
   namespace: argocd
   chart: argo/argo-cd
   version: '4.2.2'
+  disableValidationOnInstall: true # see commit https://github.com/roboll/helmfile/commit/1ef9b29f6dce765e3a083e90467581ad2e6fccc6
   values:
   - server:
       certificate:

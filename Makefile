@@ -1,2 +1,13 @@
-pre-check:
-	GOSS_USE_ALPHA=1 goss --gossfile test/pre-check.yml validate
+.DEFAULT_GOAL := setup
+
+.PHONY: install
+install:
+	source .env && helmfile -f base/helmfile.yaml apply
+
+.PHONY: setup
+setup:
+	./base/setup.sh
+
+.PHONY: uninstall
+uninstall:
+	source .env && helmfile -f base/helmfile.yaml destroy
