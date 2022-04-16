@@ -1,2 +1,3 @@
 .env
+base/env-override.yaml
 *.log
