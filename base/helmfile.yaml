@@ -17,9 +17,12 @@ environments:
   default:
     values:
     - y8s:
-        domain: local.ycloud.rocks
         default_issuer: selfsigned
+        domain: local.ycloud.rocks
         ingress_enabled: false
+        platform_services_repo: https://github.com/wyattwalter/y8s
+        platform_services_dir: platform-services
+        platform_services_target_revision: HEAD
     - env-override.yaml
 
 releases:
@@ -109,3 +112,25 @@ releases:
         - hosts:
           - argocd.{{ .Values.y8s.domain }}
           secretName: argocd-cert
+
+- name: platform-services
+  needs: ['argocd/argocd']
+  chart: "kubernetes-incubator/raw"
+  namespace: argocd
+  cleanupOnFail: true
+  values:
+  - resources:
+    - apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: platform-services
+      spec:
+        project: default
+        source:
+          repoURL: {{ .Values.y8s.platform_services_repo }}
+          targetRevision: {{ .Values.y8s.platform_services_target_revision }}
+          path: {{ .Values.y8s.platform_services_dir }}
+        destination:
+          server: https://kubernetes.default.svc
+        syncPolicy:
+          automated: {}

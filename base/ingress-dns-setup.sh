@@ -4,7 +4,8 @@
 
 set -e
 
-DOMAIN=$(yq eval '.environments.default.values[].y8s.domain' helmfile.yaml)
+BASE_DIR=$(dirname $0)
+DOMAIN=$(yq eval '.environments.default.values[].y8s.domain' $BASE_DIR/helmfile.yaml)
 MINIKUBE_IP=$(minikube ip)
 RESOLVER_FILE="/etc/resolver/y8s-resolver"
 TEMPFILE=$(mktemp)
