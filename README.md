@@ -9,15 +9,7 @@ k8s for y@. A demo platform.
 
 ## Setup
 
-To get started, you'll need to register an OAuth application on GitHub (callback is localhost:7000 for now) and a GitHub personal access token. For the personal access token, it needs repo, workflow, and admin:repo_hook access.
-
-Store those secrets into the .env file in your local checkout like:
-
-```
-export GITHUB_TOKEN=<token>
-export AUTH_GITHUB_CLIENT_ID=<id>
-export AUTH_GITHUB_CLIENT_SECRET=<secret>
-```
+y8s uses the 1Password operator to pull secrets into the cluster. Ideally this is the only secret value that you need to provide during bootstrap, but it does take a little bit of setup. Setup "Secrets Automation" at https://my.1password.com/integrations/active. Once that is provisioned, set the 1Password token and credentials JSON values into the example from env-example, saving the file as `.env`.
 
 Bootstrap the system with:
 
