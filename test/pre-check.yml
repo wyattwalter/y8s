@@ -1,0 +1,30 @@
+command:
+  kubectl config current-context:
+    exit-status: 0
+    stdout:
+    - minikube
+    stderr: []
+    timeout: 10000
+  minikube addons list -o json | jq '."ingress-dns".Status':
+    exit-status: 0
+    stdout:
+    - '"enabled"'
+    stderr: []
+    timeout: 10000
+  minikube addons list -o json | jq '.ingress.Status':
+    exit-status: 0
+    stdout:
+    - '"enabled"'
+    stderr: []
+    timeout: 10000
+  minikube status:
+    exit-status: 0
+    stdout:
+    - minikube
+    - 'type: Control Plane'
+    - 'host: Running'
+    - 'kubelet: Running'
+    - 'apiserver: Running'
+    - 'kubeconfig: Configured'
+    stderr: []
+    timeout: 10000
