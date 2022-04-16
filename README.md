@@ -6,6 +6,7 @@ k8s for y@. A demo platform.
 
 - [minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [asdf](https://asdf-vm.com/guide/getting-started.html)
+- [1Password Secrets Automation](https://1password.com/products/secrets/) (via the 1Password Operator)
 
 ## Setup
 
