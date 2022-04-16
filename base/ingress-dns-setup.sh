@@ -20,5 +20,5 @@ echo "👋 need sudo to write the resolver file. this is optional, but can't be 
 echo "   if you choose not to let this script sudo, control-c and run the copy command output below:"
 echo ""
 set -x
-sudo cp $TEMPFILE /etc/resolver/y8s-resolver
+sudo cp $TEMPFILE $RESOLVER_FILE
 rm $TEMPFILE
