@@ -29,7 +29,7 @@ releases:
 - name: cert-manager
   namespace: cert-manager
   chart: jetstack/cert-manager
-  version: 'v1.7.2'
+  version: 'v1.8.0'
   wait: true
   set:
   - name: installCRDs
