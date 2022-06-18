@@ -18,8 +18,9 @@ environments:
     values:
     - y8s:
         default_issuer: selfsigned
-        domain: local.ycloud.rocks
-        ingress_enabled: false
+        domain: 127-0-0-1.nip.io
+        ingress_port: 8080
+        ingress_enabled: true
         platform_services_repo: https://github.com/wyattwalter/y8s
         platform_services_dir: platform-services
         platform_services_target_revision: HEAD
@@ -83,6 +84,10 @@ releases:
   - controller:
       metrics:
         enabled: true
+      service:
+        type: NodePort
+      hostPort:
+        enabled: true
 
 - name: argocd
   needs: ['cert-manager/cert-manager']
@@ -98,20 +103,18 @@ releases:
         issuer:
           kind: ClusterIssuer
           name: {{ .Values.y8s.default_issuer }}
+      config:
+        url: http://argocd.{{ .Values.y8s.domain }}:{{ .Values.y8s.ingress_port }}
       extraArgs:
       - --insecure
       ingress:
         annotations:
           cert-manager.io/cluster-issuer: {{ .Values.y8s.default_issuer }}
         enabled: true
-        https: true
+        https: false
         ingressClassName: nginx
         hosts:
         - argocd.{{ .Values.y8s.domain }}
-        tls:
-        - hosts:
-          - argocd.{{ .Values.y8s.domain }}
-          secretName: argocd-cert
 
 - name: platform-services
   needs: ['argocd/argocd']
