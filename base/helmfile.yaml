@@ -88,7 +88,7 @@ releases:
   needs: ['cert-manager/cert-manager']
   namespace: argocd
   chart: argo/argo-cd
-  version: '4.9.8'
+  version: '5.55.0'
   disableValidationOnInstall: true # see commit https://github.com/roboll/helmfile/commit/1ef9b29f6dce765e3a083e90467581ad2e6fccc6
   values:
   - server:
