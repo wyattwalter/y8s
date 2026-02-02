@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: asdf_install
-      uses: asdf-vm/actions/install@v1
+      uses: asdf-vm/actions/install@v4
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: run setup
