@@ -57,7 +57,7 @@ releases:
   needs: ['cert-manager/cert-manager']
   namespace: 1password
   chart: 1password/connect
-  version: '1.7.1'
+  version: '2.3.0'
   wait: true
   timeout: 120
   values:
